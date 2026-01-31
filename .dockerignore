@@ -1,0 +1,10 @@
+.env
+.git
+*.md
+.gitignore
+Dockerfile
+.dockerignore
+*.sh
+apply_migration.sh
+apply_migration_fixed.sh
+check_db.sh
