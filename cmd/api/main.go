@@ -72,6 +72,13 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func shortenHandler(w http.ResponseWriter, r *http.Request) {
+	// SECURITY: Private beta mode - require password
+	betaPassword := r.Header.Get("X-Beta-Password")
+	if betaPassword != os.Getenv("BETA_PASSWORD") {
+		respondError(w, "Service currently in private beta. Contact admin for access.", http.StatusForbidden)
+		return
+	}
+
 	var req ShortenRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		respondError(w, "Invalid request", http.StatusBadRequest)
